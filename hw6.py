@@ -1,4 +1,4 @@
-with open("input.txt") as file:
+with open("input.txt", "r") as file:
     input = file.read()
 
 data = input.split()
@@ -28,9 +28,9 @@ b = 0
 
 for x in range(0, len(table)):
     grades.append(table[x][0:3])
-    if x < (len(table) / 3):
-        if a > (len(table) / 3) and table[x - 1][-1] == "L":
-            if table[x][-1] == "E":
+    if x < ((len(table) / 3) + 1):
+        if a >= (len(table) / 3) and table[x - 1][-2] == table[x][-2]:
+            if table[x][-1] == "E" and table[x - 1][-1] == "L":
                 grades[x].append("A")
                 grades[x - 1][-1] = "B"
                 b += 1
@@ -41,8 +41,8 @@ for x in range(0, len(table)):
                 grades[x].append("A")
                 a += 1
     elif x < (2 *(len(table) / 3)):
-        if b > (2 * (len(table) / 3)) and table[x -1][-1] == "L":
-            if table[x][-1] == "E":
+        if b >= (2 * (len(table) / 3)) and table[x - 1][-2] == table[x][-2]:
+            if table[x][-1] == "E" and table[x - 1][-1] == "L":
                 grades[x].append("B")
                 grades[x - 1][-1] = "C"
         else:    
@@ -78,6 +78,17 @@ print"\nSorted by last name:\n"
 
 for x in grades:
     print x    
+
+with open("output.html", "w") as output:
+    output.write("<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<table>\n")
+    for x in grades:
+        output.write("\n<tr>\n")
+        for y in x:
+            output.write("\n<td>")
+                
+
+    output.write("\n</table>\n</body>\n</html>\n")
+    
 
 
 
