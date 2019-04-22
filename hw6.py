@@ -29,21 +29,39 @@ b = 0
 for x in range(0, len(table)):
     grades.append(table[x][0:3])
     if x < (len(table) / 3):
-        if a > (len(table) / 3) and grades[x - 1][3] == "A":
-            grades[x].append("B")
+        if a > (len(table) / 3) and table[x - 1][-1] == "L":
+            if table[x][-1] == "E":
+                grades[x].append("A")
+                grades[x - 1][-1] = "B"
+                b += 1
+            else:
+                grades[x].append("A")
+                a += 1
         else:
-            grades[x].append("A")
-            a += 1
-    elif x < (2 *(len(table) / 2)):
-        if b > (2 * (len(table) / 2)) and grades[x -1][3] == "B":
-            if table[x - 1][-1] == "E":
-                
-            else:    
-                grades[x].append("C")
+                grades[x].append("A")
+                a += 1
+    elif x < (2 *(len(table) / 3)):
+        if b > (2 * (len(table) / 3)) and table[x -1][-1] == "L":
+            if table[x][-1] == "E":
+                grades[x].append("B")
+                grades[x - 1][-1] = "C"
+        else:    
+                grades[x].append("B")
+                b += 1
     elif x >= ((len(table) % 10) - 1):
-        grades[x].append("F")
+        if table[x][-2] == table[x - 1][-2]:
+            if table[x][-1] == "E":
+                grades[x].append("C")
+                grades[x -1][-1] = "F"
+            elif table[x][-1] == "L":
+                grades.append("F")
+        else:
+            grades.append("F")
     else:
-        grades[x].append("C")
+        if table[x][-1] == "E":
+            grades[x].append("C")
+        else:
+            grades[x].append("D")
 
 print "\nGrades:\n"
 
@@ -54,7 +72,12 @@ print "\nCounts:\n"
 print a
 print b
 
-    
+grades.sort(key=lambda x: x[-2])
+
+print"\nSorted by last name:\n"
+
+for x in grades:
+    print x    
 
 
 
